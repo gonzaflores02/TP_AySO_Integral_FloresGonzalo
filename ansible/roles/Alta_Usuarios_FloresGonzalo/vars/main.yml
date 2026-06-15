@@ -1,0 +1,10 @@
+---
+GRUPO_SECUNDARIO: "FloresGonzalo"
+HASH: "$y$j9T$nC6Mm9LNzQjPCMczk8eTs1$T6fbh1SvPQqpYi2MESxHYtxYCP7kHIa/U8dx1tZ2bE8"
+USUARIOS:
+  - { USERNAME: "R1_Flores", GRUPO_PRINCIPAL: "G_R1" }
+  - { USERNAME: "R2_Flores", GRUPO_PRINCIPAL: "G_R2" }
+  - { USERNAME: "R3_Flores", GRUPO_PRINCIPAL: "G_R3" }
+  - { USERNAME: "R4_Flores", GRUPO_PRINCIPAL: "G_R4" }
+  - { USERNAME: "R5_Flores", GRUPO_PRINCIPAL: "G_R5" }
+  - { USERNAME: "R6_Flores", GRUPO_PRINCIPAL: "G_R6" }

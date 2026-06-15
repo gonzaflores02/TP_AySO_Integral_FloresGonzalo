@@ -1,0 +1,24 @@
+---
+- name: "Creo grupos principales"
+  become: yes
+  ansible.builtin.group:
+    name: "{{ item.GRUPO_PRINCIPAL }}"
+    state: present
+  with_items: "{{ USUARIOS }}"
+
+- name: "Creo grupo secundario"
+  become: yes
+  ansible.builtin.group:
+    name: "{{ GRUPO_SECUNDARIO }}"
+    state: present
+
+- name: "Creo usuarios"
+  become: yes
+  ansible.builtin.user:
+    name: "{{ item.USERNAME }}"
+    group: "{{ item.GRUPO_PRINCIPAL }}"
+    groups: "{{ GRUPO_SECUNDARIO }}"
+    password: "{{ HASH }}"
+    create_home: yes
+    shell: /bin/bash
+  with_items: "{{ USUARIOS }}"

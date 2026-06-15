@@ -1,0 +1,9 @@
+---
+- name: "add NOPASSWD in sudoers for group FloresGonzalo"
+  become: yes
+  lineinfile:
+    path: /etc/sudoers.d/FloresGonzalo
+    state: present
+    line: '%FloresGonzalo ALL=(ALL) NOPASSWD: ALL'
+    create: yes
+    validate: 'visudo -cf %s'
