@@ -1,0 +1,63 @@
+2026-06-15 22:15:53,378 p=7313 u=vagrant n=ansible | VM1-Grupo-FloresGonzalo | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2026-06-15 22:15:53,429 p=7313 u=vagrant n=ansible | VM2-Grupo-FloresGonzalo | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2026-06-15 22:56:28,913 p=7696 u=vagrant n=ansible | PLAY [testing,produccion] ********************************************************
+2026-06-15 22:56:28,923 p=7696 u=vagrant n=ansible | TASK [Gathering Facts] ***********************************************************
+2026-06-15 22:56:30,874 p=7696 u=vagrant n=ansible | ok: [VM2-Grupo-FloresGonzalo]
+2026-06-15 22:56:31,064 p=7696 u=vagrant n=ansible | ok: [VM1-Grupo-FloresGonzalo]
+2026-06-15 22:56:31,078 p=7696 u=vagrant n=ansible | TASK [include_role : TP_INI] *****************************************************
+2026-06-15 22:56:31,156 p=7696 u=vagrant n=ansible | TASK [TP_INI : Rol: TP_INI - Grupo: FloresGonzalo] *******************************
+2026-06-15 22:56:31,184 p=7696 u=vagrant n=ansible | ok: [VM1-Grupo-FloresGonzalo] => {
+    "msg": "Inicio de tareas dentro del Rol: TP_INI"
+}
+2026-06-15 22:56:31,186 p=7696 u=vagrant n=ansible | ok: [VM2-Grupo-FloresGonzalo] => {
+    "msg": "Inicio de tareas dentro del Rol: TP_INI"
+}
+2026-06-15 22:56:31,193 p=7696 u=vagrant n=ansible | TASK [TP_INI : Creo directorio /tmp/Grupo] ***************************************
+2026-06-15 22:56:31,622 p=7696 u=vagrant n=ansible | changed: [VM1-Grupo-FloresGonzalo]
+2026-06-15 22:56:31,787 p=7696 u=vagrant n=ansible | changed: [VM2-Grupo-FloresGonzalo]
+2026-06-15 22:56:31,803 p=7696 u=vagrant n=ansible | TASK [TP_INI : Agrego archivo desde template] ************************************
+2026-06-15 22:56:31,936 p=7696 u=vagrant n=ansible | fatal: [VM1-Grupo-FloresGonzalo]: FAILED! => {"changed": false, "msg": "AnsibleUndefinedVariable: 'Variable_Vars_main' is undefined"}
+2026-06-15 22:56:32,185 p=7696 u=vagrant n=ansible | fatal: [VM2-Grupo-FloresGonzalo]: FAILED! => {"changed": false, "msg": "AnsibleUndefinedVariable: 'Variable_Vars_main' is undefined"}
+2026-06-15 22:56:32,186 p=7696 u=vagrant n=ansible | PLAY RECAP ***********************************************************************
+2026-06-15 22:56:32,187 p=7696 u=vagrant n=ansible | VM1-Grupo-FloresGonzalo    : ok=3    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2026-06-15 22:56:32,187 p=7696 u=vagrant n=ansible | VM2-Grupo-FloresGonzalo    : ok=3    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2026-06-15 22:57:09,217 p=7941 u=vagrant n=ansible | PLAY [testing,produccion] **************************************************************************************************************************************************
+2026-06-15 22:57:09,225 p=7941 u=vagrant n=ansible | TASK [Gathering Facts] *****************************************************************************************************************************************************
+2026-06-15 22:57:10,313 p=7941 u=vagrant n=ansible | ok: [VM2-Grupo-FloresGonzalo]
+2026-06-15 22:57:10,335 p=7941 u=vagrant n=ansible | ok: [VM1-Grupo-FloresGonzalo]
+2026-06-15 22:57:10,348 p=7941 u=vagrant n=ansible | TASK [include_role : TP_INI] ***********************************************************************************************************************************************
+2026-06-15 22:57:10,397 p=7941 u=vagrant n=ansible | TASK [TP_INI : Rol: TP_INI - Grupo: FloresGonzalo] *************************************************************************************************************************
+2026-06-15 22:57:10,427 p=7941 u=vagrant n=ansible | ok: [VM1-Grupo-FloresGonzalo] => {
+    "msg": "Inicio de tareas dentro del Rol: TP_INI"
+}
+2026-06-15 22:57:10,428 p=7941 u=vagrant n=ansible | ok: [VM2-Grupo-FloresGonzalo] => {
+    "msg": "Inicio de tareas dentro del Rol: TP_INI"
+}
+2026-06-15 22:57:10,435 p=7941 u=vagrant n=ansible | TASK [TP_INI : Creo directorio /tmp/Grupo] *********************************************************************************************************************************
+2026-06-15 22:57:10,844 p=7941 u=vagrant n=ansible | ok: [VM1-Grupo-FloresGonzalo]
+2026-06-15 22:57:10,973 p=7941 u=vagrant n=ansible | ok: [VM2-Grupo-FloresGonzalo]
+2026-06-15 22:57:10,981 p=7941 u=vagrant n=ansible | TASK [TP_INI : Agrego archivo desde template] ******************************************************************************************************************************
+2026-06-15 22:57:11,753 p=7941 u=vagrant n=ansible | changed: [VM1-Grupo-FloresGonzalo]
+2026-06-15 22:57:11,965 p=7941 u=vagrant n=ansible | changed: [VM2-Grupo-FloresGonzalo]
+2026-06-15 22:57:11,972 p=7941 u=vagrant n=ansible | TASK [Otra tarea] **********************************************************************************************************************************************************
+2026-06-15 22:57:11,996 p=7941 u=vagrant n=ansible | ok: [VM1-Grupo-FloresGonzalo] => {
+    "msg": "Despues de la ejecucion del rol"
+}
+2026-06-15 22:57:12,000 p=7941 u=vagrant n=ansible | ok: [VM2-Grupo-FloresGonzalo] => {
+    "msg": "Despues de la ejecucion del rol"
+}
+2026-06-15 22:57:12,013 p=7941 u=vagrant n=ansible | PLAY RECAP *****************************************************************************************************************************************************************
+2026-06-15 22:57:12,014 p=7941 u=vagrant n=ansible | VM1-Grupo-FloresGonzalo    : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2026-06-15 22:57:12,014 p=7941 u=vagrant n=ansible | VM2-Grupo-FloresGonzalo    : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

@@ -3,7 +3,7 @@ testing
 produccion
 
 [testing]
-127.0.0.1 
+VM1-Grupo-FloresGonzalo
 
 [produccion]
-localhost ansible_connection=local 
+VM2-Grupo-FloresGonzalo
