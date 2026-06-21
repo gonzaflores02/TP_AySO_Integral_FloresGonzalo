@@ -1,128 +1,98 @@
-# UTN-FRA_SO_TP-Integral
+# TP Integral - Arquitectura y Sistemas Operativos
 
+Gonzalo Flores - Legajo 120581 - Division 313
 
-## Descripción:
-> El siguiente TP tiene como finalidad recrear un equipo de trabajo. </br>
-> Se encontrarán y deberán resolver los diferentes inconvenientes que surjan en el camino.
+El TP lo hice solo, asi que cumplo los 6 roles (R1 a R6). Por eso no use las ramas dev_R1 a dev_R6 que pide el enunciado, sino que use una sola rama dev para ir subiendo todo el desarrollo. Cuando terminaba una parte la mergeaba a main.
 
-- [ ] Funciones.
-  - (R1) Líder:
-  - (R2) Responsable de Arquitectura:
-  - (R3) Responsable de Automatización Nivel 1:
-  - (R4) Responsable de Automatización Nivel 2:
-  - (R5) Responsable de Microservicios:
-  - (R6) Responsable de Testing / Documentacion:
-  
-## Responsabilidades
-- [ ] (R1) - Líder:
-  - Dueño de la rama Master.
-  - Acepta pull requests.
-  - Realiza merges.
-  - Responsable de producción.
-  - Colabora con los distintos desarrollos
-  - Media en conflictos entre miembros del equipo.
+## Estructura
 
-- [ ] (R2) - Arquitectura:
-  - Solo pushea contra dev_R2
-  - Definición del hardware.
-  - Scriptear la instalacion de todos los programas necesarios para el desarrollo del TP.
-  - Estructura de discos / FS.
-  - Colabora con los distintos desarrollos
+- vm/ -> Vagrantfile y scripts para levantar las 2 VMs
+- LVM/ -> script de particionamiento y LVM
+- Bash_script/ -> scripts de alta de usuarios y chequeo de URLs
+- ansible/ -> playbook y roles
+- docker/ -> dockerfile, docker-compose y la web
+- setup.sh -> configura /etc/hosts y cruza las claves ssh entre las VMs
 
-- [ ] (R3) - Automatización Nivel 1:
-  - Solo pushea contra dev_R3
-  - Script Creación de usuarios.
-  - Script Monitoreo web.
-  - Documenta los Script  realizados.
-  - Colabora con los distintos desarrollos
+## Como levantar todo
 
-- [ ] (R4) - Automatización Nivel 2:
-  - Solo pushea contra dev_R4
-  - Desarrollo de Playbooks de Ansible.
-  - Desarrolla Roles de Ansible.
-  - Colabora con los distintos desarrollos
+Primero levantar las VMs:
 
-- [ ] (R5) - Microservicios:
-  - Solo pushea contra dev_R5
-  - Desarrollo de imágenes Docker / docker-compose.
-  - Publicacion de la imagen en dockerhub
-  - Responsable de la ejecución de las imágenes.
-  - Documenta procesos de creación y despliegue de imágenes Docker.
-  - Colabora con los distintos desarrollos
+cd vm/
+vagrant up
+vagrant ssh primero
 
-- [ ] (R6) - Testing / Documentación:
-  - Solo pushea contra dev_R6
-  - Generación y verificación de issues.
-  - Desarrolla Playbook de testing unitarios dentro de los Roles de Ansible.
-  - Prueba y Verifica las distintas soluciones desarrolladas
-    - Las mismas deben ser idempotentes.
-  - Colabora con los distintos desarrollos
+El Vagrantfile ya clona este repositorio dentro de la VM en ~/repogit/TP_AySO_Integral_FloresGonzalo. Todos los comandos que siguen se ejecutan parado dentro de esa carpeta, salvo que se indique lo contrario:
 
+cd ~/repogit/TP_AySO_Integral_FloresGonzalo
 
+Despues correr el setup en cada VM:
 
+bash setup.sh
 
+Va a pedir confirmar la conexion SSH (escribir "yes") y la contraseña de cada VM (la clave es "vagrant"), una vez por cada VM.
 
+### LVM
 
-## Tareas: 
-- [ ]   Preparacion del Repositorio de Git
-  - Responsable: (R1) Lider
-  - Tareas: Push contra master / Aceptar pull request
-    - Seguridad: Rama Master -> Solo el lider puede pushear
-    - Seguridad: Rama dev -> El esto de los integrantes pueden pushear
-    - Seguridad: Cuando se requiera subir un cambio de dev a Master, El responsable de esa funcionalidad debe realizar un pull request al lider para que se realice el merge contra la rama master.
-    - Metodologia:  Trunk-based development (TBD).
-    - Cantidad de ramas aceptadas: master , dev
+bash LVM/lvm.sh
 
-- [ ]   Preparacion de la VM
-  - Responsable: (R2) Arquitectura
-  - Tareas:
-    - Generacion de vagrantfile
-    - Aprovisionamiento de las VM
-    - Configuraciones de las VM
-    - Nombres VM: 
-      - VM1-Grupo-xxxx
-      - VM2-Grupo-xxxx
+Esto crea las particiones de tipo 8e, los PV, VG y LV pedidos:
+vg_datos con lv_docker (10M) montado en /var/lib/docker/, lv_workareas (2.5G) montado en /work/
+vg_temp con lv_swap (2.5G)
+Y la swap tradicional de 1G en el disco que sobra.
 
-- [ ]   LVM
-  - Responsable: Arquitectura
-  - Tareas: 
-    - Indicar al responsable de la preparacion de la vm Discos a incorporar.
-    - Scriptear: Las tareas de particionamiento, creacion de PV, VG, LV, formateo y montajes persistentes segun el punto de LVM.
-    - Documentar: Las tareas de particionamiento, creacion de PV, VG, LV, formateo y montajes persistentes segun el punto de LVM.
-    - Debe ser idempotente.
+Verificacion:
 
-- [ ]   Bash-Scripting
-  - Responsable: Automatizacion Nivel 1
-  - Tareas: 
-    - Scriptear: Las tareas pedidas en el punto de Bash-Scripting 
-    - Documentar: Las tareas pedidas en el punto de Bash-Scripting 
-    - Ejecutar y validar el correcto funcionamiento.
+sudo pvs
+sudo vgs
+sudo lvs
+df -h | grep mapper
+swapon --show
 
-- [ ]   Ansible
-  - Responsable: Automatizacion Nivel 2
-  - Tareas: 
-    - Desarrollar Playbook Ansible: Las tareas pedidas en el punto de Ansible.
-    - Desarrollar Roles Ansible pedidos en el punto de Ansible.
-    - Documentar: Las tareas pedidas en el punto de Ansible.
+### Bash Scripting
 
+Parado dentro de Bash_script/alta_usuarios/ y Bash_script/check_url/ respectivamente:
 
-- [ ]   Docker
-  - Responsable: Microservicios.
-  - Tareas: 
-    - Desarrollar dockerfile
-    - Desarrollar imagen 
-    - Documentar: Las tareas pedidas en el punto de Docker.
-    - Generar docker-compose
-    - Pushear la imagen en la registry / Dar soporte a los demas integrantes en esta tarea
-    - Verificar el correcto funcionamiento
+cd Bash_script/alta_usuarios
+bash alta_usuarios.sh Lista_Usuarios.txt vagrant
 
+cd ../check_url
+bash check_URL.sh Lista_URL.txt
 
-- [ ] Verificaciones / Testing
-  - Responsable: Testing/Documentacion
-  - Tareas:
-    - Ejecutar / Testear los diversos desarrollos de los demas integrantes.
-    - Documentar la ejecucion, pruebas y bugs Encontrados. (crear issues, wiki )
-    - Desarrolla Playbook de testing unitarios dentro de los Roles de Ansible.
-    - Realizar un Script-Master.sh que ejecute todas las tares.
-    - Realizar un check.sh que valide el correcto funcionamiento de todos los desarrollos.
-    
+Verificacion:
+
+grep TP_202411 /etc/passwd
+tree /tmp/head-check/
+cat /var/log/status_url.log
+
+### Ansible
+
+cd ansible/
+ansible-playbook -i inventory/hosts playbook.yml
+
+Corre los 4 roles: TP_INI, Alta_Usuarios_FloresGonzalo, Sudoers_FloresGonzalo e Instala-tools_FloresGonzalo.
+
+Nota: en la VM de Produccion (RedHat 9), los paquetes htop y tmux no se pueden instalar por falta de dependencias y disponibilidad en los repositorios de esa version. El rol usa ignore_errors para que el playbook no falle por esto. speedtest-cli si se instala bien en ambas distros.
+
+Verificacion:
+
+cat /tmp/Grupo/datos.txt
+grep R1_Flores /etc/passwd
+sudo cat /etc/sudoers.d/FloresGonzalo
+
+### Docker
+
+cd docker/
+docker build -t tp-div_313_grupo_floresgonzalo .
+docker compose up -d
+
+Se puede ver entrando a 192.168.56.5:8081 desde el navegador.
+La imagen esta subida en dockerhub como gonzaflores02/tp-div_313_grupo_floresgonzalo
+
+Verificacion:
+
+docker ps
+curl localhost:8081
+
+## Verificacion general
+
+Todo el TP fue probado de punta a punta clonando el repo en una VM nueva y limpia, siguiendo estos mismos pasos, para confirmar que funciona sin depender de nada que ya estuviera configurado de antes.
