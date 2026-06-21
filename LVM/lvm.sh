@@ -24,11 +24,39 @@ sudo mkswap ${DISCO_2G}1
 sudo swapon ${DISCO_2G}1
 echo "${DISCO_2G}1  none  swap  sw  0  0" | sudo tee -a /etc/fstab
 
-sudo pvcreate -f $DISCO_5G
-sudo pvcreate -f $DISCO_3G
+sudo fdisk $DISCO_5G << EOF
+n
+p
+1
 
-sudo vgcreate vg_datos $DISCO_5G
-sudo vgcreate vg_temp $DISCO_3G
+
+t
+8e
+w
+EOF
+
+sudo fdisk $DISCO_3G << EOF
+n
+p
+1
+
+
+t
+8e
+w
+EOF
+
+sudo partprobe $DISCO_5G
+sudo partprobe $DISCO_3G
+
+sudo wipefs -af ${DISCO_5G}1
+sudo wipefs -af ${DISCO_3G}1
+
+sudo pvcreate -f ${DISCO_5G}1
+sudo pvcreate -f ${DISCO_3G}1
+
+sudo vgcreate vg_datos ${DISCO_5G}1
+sudo vgcreate vg_temp ${DISCO_3G}1
 
 sudo lvcreate --yes -L 10M vg_datos -n lv_docker
 sudo lvcreate --yes -L 2.5G vg_datos -n lv_workareas
@@ -56,3 +84,4 @@ sudo pvs
 sudo vgs
 sudo lvs
 sudo swapon --show
+
